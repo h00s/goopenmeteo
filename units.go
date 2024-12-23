@@ -1,5 +1,6 @@
 package goopenmeteo
 
 type Units struct {
-	Temperature2m string `json:"temperature_2m"`
+	Temperature2M      string `json:"temperature_2m"`
+	RelativeHumidity2M string `json:"relative_humidity_2m"`
 }

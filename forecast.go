@@ -11,3 +11,10 @@ type Forecast struct {
 	HourlyUnits          Units   `json:"hourly_units"`
 	Hourly               Hourly  `json:"hourly"`
 }
+
+type ForecastOptions struct {
+	Latitude     float64  `url:"latitude"`
+	Longitude    float64  `url:"longitude"`
+	ForecastDays int      `url:"forecast_days,omitempty"`
+	Hourly       []string `url:"hourly,omitempty"`
+}

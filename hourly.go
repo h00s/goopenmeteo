@@ -6,14 +6,16 @@ import (
 )
 
 type Hourly struct {
-	Time          []time.Time `json:"time"`
-	Temperature2m []float64   `json:"temperature_2m"`
+	Time               []time.Time `json:"time"`
+	Temperature2M      []float64   `json:"temperature_2m"`
+	RelativeHumidity2M []int       `json:"relative_humidity_2m"`
 }
 
 func (h *Hourly) UnmarshalJSON(data []byte) error {
 	type Aux struct {
-		Time          []string  `json:"time"`
-		Temperature2m []float64 `json:"temperature_2m"`
+		Time               []string  `json:"time"`
+		Temperature2M      []float64 `json:"temperature_2m"`
+		RelativeHumidity2M []int     `json:"relative_humidity_2m"`
 	}
 
 	var aux Aux
@@ -30,6 +32,7 @@ func (h *Hourly) UnmarshalJSON(data []byte) error {
 		h.Time[i] = t
 	}
 
-	h.Temperature2m = aux.Temperature2m
+	h.Temperature2M = aux.Temperature2M
+	h.RelativeHumidity2M = aux.RelativeHumidity2M
 	return nil
 }
