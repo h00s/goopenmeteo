@@ -8,6 +8,8 @@ type Forecast struct {
 	Timezone             string            `json:"timezone"`
 	TimezoneAbbreviation string            `json:"timezone_abbreviation"`
 	Elevation            float64           `json:"elevation"`
+	CurrentUnits         map[string]string `json:"current_units"`
+	Current              Current           `json:"current"`
 	HourlyUnits          map[string]string `json:"hourly_units"`
 	Hourly               Hourly            `json:"hourly"`
 }
