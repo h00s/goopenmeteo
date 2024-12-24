@@ -5,12 +5,12 @@ import (
 	"time"
 )
 
-type Hourly struct {
+type TimeseriesData struct {
 	Time []time.Time                   `json:"time"`
 	Data map[WeatherVariable][]float64 `json:"-"`
 }
 
-func (h *Hourly) UnmarshalJSON(data []byte) error {
+func (h *TimeseriesData) UnmarshalJSON(data []byte) error {
 	var rawData map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawData); err != nil {
 		return err
