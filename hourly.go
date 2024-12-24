@@ -6,25 +6,23 @@ import (
 )
 
 type Hourly struct {
-	Time               []time.Time `json:"time"`
-	Temperature2M      []float64   `json:"temperature_2m"`
-	RelativeHumidity2M []int       `json:"relative_humidity_2m"`
+	Time []time.Time          `json:"time"`
+	Data map[string][]float64 `json:"-"`
 }
 
 func (h *Hourly) UnmarshalJSON(data []byte) error {
-	type Aux struct {
-		Time               []string  `json:"time"`
-		Temperature2M      []float64 `json:"temperature_2m"`
-		RelativeHumidity2M []int     `json:"relative_humidity_2m"`
-	}
-
-	var aux Aux
-	if err := json.Unmarshal(data, &aux); err != nil {
+	var rawData map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawData); err != nil {
 		return err
 	}
 
-	h.Time = make([]time.Time, len(aux.Time))
-	for i, timeStr := range aux.Time {
+	var timeStrings []string
+	if err := json.Unmarshal(rawData["time"], &timeStrings); err != nil {
+		return err
+	}
+
+	h.Time = make([]time.Time, len(timeStrings))
+	for i, timeStr := range timeStrings {
 		t, err := time.Parse("2006-01-02T15:04", timeStr)
 		if err != nil {
 			return err
@@ -32,7 +30,19 @@ func (h *Hourly) UnmarshalJSON(data []byte) error {
 		h.Time[i] = t
 	}
 
-	h.Temperature2M = aux.Temperature2M
-	h.RelativeHumidity2M = aux.RelativeHumidity2M
+	h.Data = make(map[string][]float64)
+
+	for key, value := range rawData {
+		if key == "time" {
+			continue
+		}
+
+		var floatArr []float64
+		if err := json.Unmarshal(value, &floatArr); err != nil {
+			return err
+		}
+		h.Data[key] = floatArr
+	}
+
 	return nil
 }

@@ -15,9 +15,8 @@ func NewOpenMeteo(APIKey string) *OpenMeteo {
 	return &OpenMeteo{APIKey: APIKey}
 }
 
-// Forecast returns the forecast for the given latitude and longitude.
-func (o *OpenMeteo) Forecast(latitude, longitude float64) (*Forecast, error) {
-	url := fmt.Sprintf("%s/forecast?latitude=%f&longitude=%f&hourly=temperature_2m", BaseURL, latitude, longitude)
+func (o *OpenMeteo) Forecast(options ForecastOptions) (*Forecast, error) {
+	url := fmt.Sprintf("%s/forecast?%s", BaseURL, options.Query())
 	response, err := httpGet(url)
 	if err != nil {
 		return nil, err
