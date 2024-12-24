@@ -160,7 +160,6 @@ func urlQuery(s interface{}) string {
 			first = false
 			buf.WriteString(url.QueryEscape(k))
 			buf.WriteByte('=')
-			// Don't encode commas, but encode everything else
 			parts := strings.Split(v, ",")
 			for i, part := range parts {
 				if i > 0 {

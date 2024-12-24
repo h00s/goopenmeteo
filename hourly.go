@@ -41,7 +41,6 @@ func (h *Hourly) UnmarshalJSON(data []byte) error {
 		if err := json.Unmarshal(value, &floatArr); err != nil {
 			return err
 		}
-		// Changed this line - no need for WeatherVariable() conversion
 		h.Data[key] = floatArr
 	}
 
