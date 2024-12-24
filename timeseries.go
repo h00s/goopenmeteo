@@ -10,7 +10,7 @@ type TimeseriesData struct {
 	Data map[WeatherVariable][]float64 `json:"-"`
 }
 
-func (h *TimeseriesData) UnmarshalJSON(data []byte) error {
+func (t *TimeseriesData) UnmarshalJSON(data []byte) error {
 	var rawData map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawData); err != nil {
 		return err
@@ -21,16 +21,19 @@ func (h *TimeseriesData) UnmarshalJSON(data []byte) error {
 		return err
 	}
 
-	h.Time = make([]time.Time, len(timeStrings))
+	t.Time = make([]time.Time, len(timeStrings))
 	for i, timeStr := range timeStrings {
-		t, err := time.Parse("2006-01-02T15:04", timeStr)
+		var err error
+		if len(timeStr) == 10 { // Format: "2024-12-24"
+			timeStr = timeStr + "T00:00"
+		}
+		t.Time[i], err = time.Parse("2006-01-02T15:04", timeStr)
 		if err != nil {
 			return err
 		}
-		h.Time[i] = t
 	}
 
-	h.Data = make(map[WeatherVariable][]float64)
+	t.Data = make(map[WeatherVariable][]float64)
 
 	for key, value := range rawData {
 		if key == "time" {
@@ -41,7 +44,7 @@ func (h *TimeseriesData) UnmarshalJSON(data []byte) error {
 		if err := json.Unmarshal(value, &floatArr); err != nil {
 			return err
 		}
-		h.Data[key] = floatArr
+		t.Data[key] = floatArr
 	}
 
 	return nil
