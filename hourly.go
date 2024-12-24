@@ -6,8 +6,8 @@ import (
 )
 
 type Hourly struct {
-	Time []time.Time          `json:"time"`
-	Data map[string][]float64 `json:"-"`
+	Time []time.Time                   `json:"time"`
+	Data map[WeatherVariable][]float64 `json:"-"`
 }
 
 func (h *Hourly) UnmarshalJSON(data []byte) error {
@@ -30,7 +30,7 @@ func (h *Hourly) UnmarshalJSON(data []byte) error {
 		h.Time[i] = t
 	}
 
-	h.Data = make(map[string][]float64)
+	h.Data = make(map[WeatherVariable][]float64)
 
 	for key, value := range rawData {
 		if key == "time" {
@@ -41,6 +41,7 @@ func (h *Hourly) UnmarshalJSON(data []byte) error {
 		if err := json.Unmarshal(value, &floatArr); err != nil {
 			return err
 		}
+		// Changed this line - no need for WeatherVariable() conversion
 		h.Data[key] = floatArr
 	}
 
