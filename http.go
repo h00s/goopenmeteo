@@ -1,7 +1,8 @@
 package goopenmeteo
 
 import (
-	"fmt"
+	"encoding/json"
+	"errors"
 	"io"
 	"net/http"
 	"net/url"
@@ -22,8 +23,13 @@ func httpGet(url string) ([]byte, error) {
 	}
 	defer resp.Body.Close()
 
-	if resp.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("unexpected status code: %d", resp.StatusCode)
+	if resp.StatusCode == http.StatusBadRequest {
+		var errorResponse ErrorResponse
+		if err := json.NewDecoder(resp.Body).Decode(&errorResponse); err != nil {
+			return nil, err
+		}
+	} else if resp.StatusCode != http.StatusOK {
+		return nil, errors.New("unexpected status code")
 	}
 
 	return io.ReadAll(resp.Body)

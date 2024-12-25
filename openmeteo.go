@@ -11,12 +11,18 @@ type OpenMeteo struct {
 	APIKey string
 }
 
-func NewOpenMeteo(APIKey string) *OpenMeteo {
-	return &OpenMeteo{APIKey: APIKey}
+func NewOpenMeteo(APIKey ...string) *OpenMeteo {
+	if len(APIKey) > 0 {
+		return &OpenMeteo{APIKey: APIKey[0]}
+	}
+	return &OpenMeteo{}
 }
 
 func (o *OpenMeteo) Forecast(options ForecastOptions) (*Forecast, error) {
 	url := fmt.Sprintf("%s/forecast?%s", BaseURL, options.ToQuery())
+	if o.APIKey != "" {
+		url = fmt.Sprintf("%s&apikey=%s", url, o.APIKey)
+	}
 	response, err := httpGet(url)
 	if err != nil {
 		return nil, err
