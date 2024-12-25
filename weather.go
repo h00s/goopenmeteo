@@ -9,6 +9,11 @@ const (
 	RelativeHumidity2M  WeatherVariable = "relative_humidity_2m"
 	DewPoint2M          WeatherVariable = "dew_point_2m"
 	ApparentTemperature WeatherVariable = "apparent_temperature"
+	// Daily Temperature
+	Temperature2MMax       WeatherVariable = "temperature_2m_max"
+	Temperature2MMin       WeatherVariable = "temperature_2m_min"
+	ApparentTemperatureMax WeatherVariable = "apparent_temperature_max"
+	ApparentTemperatureMin WeatherVariable = "apparent_temperature_min"
 
 	// Pressure
 	PressureMsl     WeatherVariable = "pressure_msl"
@@ -30,6 +35,10 @@ const (
 	WindDirection120M WeatherVariable = "wind_direction_120m"
 	WindDirection180M WeatherVariable = "wind_direction_180m"
 	WindGusts10M      WeatherVariable = "wind_gusts_10m"
+	// Daily Wind
+	WindSpeed10MMax          WeatherVariable = "wind_speed_10m_max"
+	WindGusts10MMax          WeatherVariable = "wind_gusts_10m_max"
+	WindDirection10MDominant WeatherVariable = "wind_direction_10m_dominant"
 
 	// Solar Radiation
 	ShortwaveRadiation     WeatherVariable = "shortwave_radiation"
@@ -37,6 +46,10 @@ const (
 	DirectNormalIrradiance WeatherVariable = "direct_normal_irradiance"
 	DiffuseRadiation       WeatherVariable = "diffuse_radiation"
 	GlobalTiltedIrradiance WeatherVariable = "global_tilted_irradiance"
+	// Daily Solar
+	ShortwaveRadiationSum WeatherVariable = "shortwave_radiation_sum"
+	SunshineDuration      WeatherVariable = "sunshine_duration"
+	DaylightDuration      WeatherVariable = "daylight_duration"
 
 	// Moisture and Evaporation
 	VapourPressureDeficit    WeatherVariable = "vapour_pressure_deficit"
@@ -50,6 +63,23 @@ const (
 	PrecipitationProbability WeatherVariable = "precipitation_probability"
 	Rain                     WeatherVariable = "rain"
 	Showers                  WeatherVariable = "showers"
+	// Daily Precipitation
+	PrecipitationSum             WeatherVariable = "precipitation_sum"
+	RainSum                      WeatherVariable = "rain_sum"
+	ShowersSum                   WeatherVariable = "showers_sum"
+	SnowfallSum                  WeatherVariable = "snowfall_sum"
+	PrecipitationHours           WeatherVariable = "precipitation_hours"
+	PrecipitationProbabilityMax  WeatherVariable = "precipitation_probability_max"
+	PrecipitationProbabilityMin  WeatherVariable = "precipitation_probability_min"
+	PrecipitationProbabilityMean WeatherVariable = "precipitation_probability_mean"
+
+	// UV Index
+	UVIndexMax         WeatherVariable = "uv_index_max"
+	UVIndexClearSkyMax WeatherVariable = "uv_index_clear_sky_max"
+
+	// Sun Times
+	Sunrise WeatherVariable = "sunrise"
+	Sunset  WeatherVariable = "sunset"
 
 	// Other Atmospheric
 	WeatherCode         WeatherVariable = "weather_code"
