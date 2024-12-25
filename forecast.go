@@ -72,6 +72,6 @@ type ForecastOptions struct {
 	CellSelection     CellSelection     `url:"cell_selection,omitempty"`
 }
 
-func (f *ForecastOptions) Query() string {
+func (f *ForecastOptions) ToQuery() string {
 	return urlValues(f).Encode()
 }

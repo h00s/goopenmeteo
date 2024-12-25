@@ -16,7 +16,7 @@ func NewOpenMeteo(APIKey string) *OpenMeteo {
 }
 
 func (o *OpenMeteo) Forecast(options ForecastOptions) (*Forecast, error) {
-	url := fmt.Sprintf("%s/forecast?%s", BaseURL, options.Query())
+	url := fmt.Sprintf("%s/forecast?%s", BaseURL, options.ToQuery())
 	response, err := httpGet(url)
 	if err != nil {
 		return nil, err
