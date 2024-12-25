@@ -26,7 +26,7 @@ func httpGet(url string) ([]byte, error) {
 	if resp.StatusCode == http.StatusBadRequest {
 		var errorResponse ErrorResponse
 		if err := json.NewDecoder(resp.Body).Decode(&errorResponse); err != nil {
-			return nil, err
+			return nil, errors.New(errorResponse.Reason)
 		}
 	} else if resp.StatusCode != http.StatusOK {
 		return nil, errors.New("unexpected status code")
