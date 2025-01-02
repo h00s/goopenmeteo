@@ -3,18 +3,18 @@ package goopenmeteo
 type Forecast struct {
 	Latitude             float64           `json:"latitude"`
 	Longitude            float64           `json:"longitude"`
-	GenerationTimeMS     float64           `json:"generationtime_ms"`
-	UTCOffsetSeconds     int               `json:"utc_offset_seconds"`
+	GenerationTimeMS     float64           `json:"generationTimeMs"`
+	UTCOffsetSeconds     int               `json:"utcOffsetSeconds"`
 	Timezone             string            `json:"timezone"`
-	TimezoneAbbreviation string            `json:"timezone_abbreviation"`
+	TimezoneAbbreviation string            `json:"timezoneAbbreviation"`
 	Elevation            float64           `json:"elevation"`
-	CurrentUnits         map[string]string `json:"current_units,omitempty"`
+	CurrentUnits         map[string]string `json:"currentUnits,omitempty"`
 	Current              Current           `json:"current,omitempty"`
-	Minutely15Units      map[string]string `json:"minutely_15_units,omitempty"`
-	Minutely15           TimeseriesData    `json:"minutely_15,omitempty"`
-	HourlyUnits          map[string]string `json:"hourly_units,omitempty"`
+	Minutely15Units      map[string]string `json:"minutely15Units,omitempty"`
+	Minutely15           TimeseriesData    `json:"minutely15,omitempty"`
+	HourlyUnits          map[string]string `json:"hourlyUnits,omitempty"`
 	Hourly               TimeseriesData    `json:"hourly,omitempty"`
-	DailyUnits           map[string]string `json:"daily_units,omitempty"`
+	DailyUnits           map[string]string `json:"dailyUnits,omitempty"`
 	Daily                TimeseriesData    `json:"daily,omitempty"`
 }
 
@@ -49,27 +49,27 @@ type ForecastOptions struct {
 	Longitude         float64           `url:"longitude"`
 	Elevation         float64           `url:"elevation,omitempty"`
 	Current           WeatherVariables  `url:"current,omitempty"`
-	Minutely15        WeatherVariables  `url:"minutely_15,omitempty"`
+	Minutely15        WeatherVariables  `url:"minutely15,omitempty"`
 	Hourly            WeatherVariables  `url:"hourly,omitempty"`
 	Daily             WeatherVariables  `url:"daily,omitempty"`
-	TemperatureUnit   TemperatureUnit   `url:"temperature_unit,omitempty"`
-	WindSpeedUnit     WindSpeedUnit     `url:"wind_speed_unit,omitempty"`
-	PrecipitationUnit PrecipitationUnit `url:"precipitation_unit,omitempty"`
+	TemperatureUnit   TemperatureUnit   `url:"temperatureUnit,omitempty"`
+	WindSpeedUnit     WindSpeedUnit     `url:"windSpeedUnit,omitempty"`
+	PrecipitationUnit PrecipitationUnit `url:"precipitationUnit,omitempty"`
 	Timeformat        TimeFormat        `url:"timeformat,omitempty"`
 	Timezone          string            `url:"timezone,omitempty"`
-	PastDays          int               `url:"past_days,omitempty"`
-	ForecastDays      int               `url:"forecast_days,omitempty"`
-	ForecastHours     int               `url:"forecast_hours,omitempty"`
-	PastHours         int               `url:"past_hours,omitempty"`
-	PastMinutely15    int               `url:"past_minutely_15,omitempty"`
-	StartDate         string            `url:"start_date,omitempty"`
-	EndDate           string            `url:"end_date,omitempty"`
-	StartHour         string            `url:"start_hour,omitempty"`
-	EndHour           string            `url:"end_hour,omitempty"`
-	StartMinutely15   string            `url:"start_minutely_15,omitempty"`
-	EndMinutely15     string            `url:"end_minutely_15,omitempty"`
+	PastDays          int               `url:"pastDays,omitempty"`
+	ForecastDays      int               `url:"forecastDays,omitempty"`
+	ForecastHours     int               `url:"forecastHours,omitempty"`
+	PastHours         int               `url:"pastHours,omitempty"`
+	PastMinutely15    int               `url:"pastMinutely15,omitempty"`
+	StartDate         string            `url:"startDate,omitempty"`
+	EndDate           string            `url:"endDate,omitempty"`
+	StartHour         string            `url:"startHour,omitempty"`
+	EndHour           string            `url:"endHour,omitempty"`
+	StartMinutely15   string            `url:"startMinutely15,omitempty"`
+	EndMinutely15     string            `url:"endMinutely15,omitempty"`
 	Models            []string          `url:"models,omitempty"`
-	CellSelection     CellSelection     `url:"cell_selection,omitempty"`
+	CellSelection     CellSelection     `url:"cellSelection,omitempty"`
 }
 
 func (f *ForecastOptions) ToQuery() string {

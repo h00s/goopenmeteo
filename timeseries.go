@@ -7,7 +7,7 @@ import (
 
 type TimeseriesData struct {
 	Time []time.Time                   `json:"time"`
-	Data map[WeatherVariable][]float64 `json:"-"`
+	Data map[WeatherVariable][]float64 `json:"data"`
 }
 
 func (t *TimeseriesData) UnmarshalJSON(data []byte) error {

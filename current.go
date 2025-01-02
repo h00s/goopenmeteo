@@ -8,7 +8,7 @@ import (
 type Current struct {
 	Time     time.Time                   `json:"time"`
 	Interval int                         `json:"interval"`
-	Data     map[WeatherVariable]float64 `json:"-"`
+	Data     map[WeatherVariable]float64 `json:"data"`
 }
 
 func (c *Current) UnmarshalJSON(data []byte) error {
