@@ -1,8 +1,10 @@
 package goopenmeteo
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io"
 	"net/http"
 	"net/url"
@@ -12,12 +14,15 @@ import (
 	"time"
 )
 
-func httpGet(url string) ([]byte, error) {
-	client := &http.Client{
-		Timeout: 10 * time.Second,
+// httpGet fetches url and returns the body of a 200 response. A 400 carries
+// Open-Meteo's reason as the error.
+func httpGet(ctx context.Context, client *http.Client, url string) ([]byte, error) {
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
+	if err != nil {
+		return nil, err
 	}
 
-	resp, err := client.Get(url)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -25,11 +30,12 @@ func httpGet(url string) ([]byte, error) {
 
 	if resp.StatusCode == http.StatusBadRequest {
 		var errorResponse ErrorResponse
-		if err := json.NewDecoder(resp.Body).Decode(&errorResponse); err != nil {
-			return nil, errors.New(errorResponse.Reason)
+		if err := json.NewDecoder(resp.Body).Decode(&errorResponse); err != nil || errorResponse.Reason == "" {
+			return nil, errors.New("open-meteo: bad request")
 		}
+		return nil, errors.New("open-meteo: " + errorResponse.Reason)
 	} else if resp.StatusCode != http.StatusOK {
-		return nil, errors.New("unexpected status code")
+		return nil, fmt.Errorf("open-meteo: unexpected status code %d", resp.StatusCode)
 	}
 
 	return io.ReadAll(resp.Body)
